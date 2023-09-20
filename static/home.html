@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <title>Pizza Ordering</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+    <header>
+    
+        <div class="heading">
+        <h1>Welcome to Pizza Ordering</h1>
+        </div>
+        <div class="button">
+        {% if request.user.is_authenticated %}
+        <a class="add-button" href="{% url 'cart' %}">cart({{ request.user.get_cart_count }})</a>
+    
+    <a class="add-button" href="{% url 'logout' %}">logout</a>
+            
+    </div>
+    {% else %}
+    <a class="add-button" href="{% url 'login' %}">login</a>
+    <a class="add-button" href="{% url 'register' %}">register</a>
+    {% endif %}
+    </header>
+    <main>
+        <h2>Select Your Pizza</h2>
+        <a href="{% url 'production' %}">production</a>
+       
+        <div class="pizza-options">
+            {% for pizzzs in pizzz%}
+            <div class="pizza-option">
+                <img src="img/{{pizzzs.images}}">
+                <h3>{{pizzzs.pizza_name}}</h3>
+                <p>{{pizzzs.category.catname}}</p>
+                <b>Rs.{{pizzzs.price}}</b><br>
+                {% if request.user.is_authenticated %}
+                    <button><a class="add-button" href="{% url 'addcart' pizza_uid=pizzzs.uid %}">Add cart</a></button>
+                {% else %}
+                    <button><a class="add-button" href="{% url 'login' %}">Add cart</a></button>
+                {% endif %}
+                {%if forloop.counter == 4 %}
+                <br>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+       
+    </main>
+    <footer>
+        <p>&copy; 2023 Pizza Ordering. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

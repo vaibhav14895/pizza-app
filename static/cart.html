@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <title>Order Cart</title>
+    <link rel="stylesheet" href="{%static 'css/cart.css'%}">
+    
+</head>
+
+<body>
+    <h1>Order Cart</h1>
+    <form method="post">
+        {% csrf_token %}
+    <table >
+        <tr>
+            <th>S no.</th>
+            <th>Item</th>
+            <th>Item image</th>
+            <th>Quantity</th>
+            <th>price</th>
+            <th>Action</th>
+        </tr>
+        {%for a in carts.cart_items.all  %}
+        <tr>
+            
+            <td>{{forloop.counter}}</td>
+            <td>{{a.pizza.pizza_name}}</td>
+            <td><img src="/img/{{a.pizza.images}}" height="auto" width="auto"></td>
+            <td>1</td>
+            <td id="total-product1">{{a.pizza.price}}</td>
+            <td class="actions">
+                <a href="{% url 'removeitem' a.uid %}" >remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 >Total: <span id="cart-total"> </span></h2>
+    <input type="hidden" id="price" name="price" value=""></span>
+    <p id ="fornopizza">
+    </p>
+    <button type="submit" class="checkout-button">submit</a></button>
+    </form>
+    
+    <script>
+        let sum=0;
+        const price = document.querySelectorAll("#total-product1");
+        const prices=[]
+        price.forEach((price)=>{prices.push(price.textContent)})
+        prices.forEach((price)=>{sum+=parseInt(price)})
+        console.log(sum)
+        const x = document.getElementById('cart-total');
+        x.innerHTML = sum
+        const c=document.getElementById('price');
+        c.value=sum
+        console.log(c.value)
+        if (sum == 0){
+            const n=document.getElementById("fornopizza")
+            n.innerHTML="no pizza added plz add some pizza"
+
+        } 
+    </script>
+</body>
+
+</html>

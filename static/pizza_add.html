@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add form</title>
+</head>
+<body>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>pizza name</label>
+        {{pizza_form.pizza_name}}<br>
+<br>
+        <label>pizza category</label>
+        {{pizza_form.category}}<br>
+<br>
+        <label>Price</label>
+        {{pizza_form.price}}<br>
+<br>
+         <label>pizza image</label>
+        {{pizza_form.images}}<br>
+<br>
+        <button type="submit">submit</button>
+    </form>
+
+    
+</body>
+</html>

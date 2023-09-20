@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static%}
+    <title>Pizza Ordering</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Pizza Ordering</h1>
+    </header>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">logout</a>
+    <a href="{% url 'home' %}">home</a>
+    {% else %}
+    <a href="{% url 'login' %}">login</a>
+    <a href="{% url 'register' %}">register</a>
+    {% endif %}
+    <main>
+        <h2>Select Your Pizza</h2>
+        <a href="{% url 'add_pizza' %}">add more</a>
+        {% for pizzzs in all_pizza%}
+        <div class="pizza-options">
+            <div class="pizza-option">
+                <a href="/img/{{pizzzs.images}}">
+                <img src="/img/{{pizzzs.images}}"></a>
+                <h3>{{pizzzs.pizza_name}}</h3>
+                <p>{{pizzzs.category.catname}}</p>
+                <b>Rs.{{pizzzs.price}}</b><br>
+                {% if request.user.is_authenticated %}
+                <button><a class="add-button" href="{% url 'editpizza' pizzzs.uid %}">edit</a></button>
+                <button><a class="add-button" href="{% url 'deletepizza' pizzzs.uid %}">remove</a></button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+    <footer>
+        <p>&copy; 2023 Pizza Ordering. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

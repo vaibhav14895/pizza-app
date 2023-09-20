@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    <title>Document</title>
+    <button id="rzp-button1">Pay with Razorpay</button>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"defer></script>
+<script defer>
+    document.getElementById('rzp-button1').onclick = function (e) {
+        const p = document.getElementById('price'); 
+        const u = document.getElementById('user'); 
+        amount=parseInt(p.innerHTML)
+        amount=amount*100
+        user=u.innerHTML
+        console.log(user)
+        var options = {
+            "key": "rzp_live_7fTuxoZKrdIc3D", // Enter the Key ID generated from the Dashboard
+            "amount": amount,
+            "currency": "INR",
+            "name": "Acme Corp",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": "",
+            "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+            "prefill": {
+                "name": user,
+                "email": "lol@example.com",
+                "contact": "7390989833"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>
+</head>
+<body>
+<p id="price" hidden>{{price}}</p>
+<p id="user" hidden>{{user}}</p>
+
+</body>
+</html>
